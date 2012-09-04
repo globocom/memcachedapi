@@ -3,7 +3,6 @@ import os
 from flask import Flask, jsonify
 
 MEMCACHED = os.environ.get("MEMCACHED", "127.0.0.1:11211")
-PUBLIC_HOST = os.environ.get("MEMCACHED_PUBLIC_HOST", MEMCACHED)
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -21,7 +20,7 @@ def remove_instance(name, host):
 
 @app.route("/resources/<name>", methods=["POST"])
 def bind(name):
-    out = jsonify(MEMCACHED=app.config["PUBLIC_HOST"])
+    out = jsonify(MEMCACHED=app.config["MEMCACHED"])
     return out, 201
 
 
