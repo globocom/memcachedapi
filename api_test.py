@@ -1,12 +1,20 @@
 import unittest
 import json
+import os
 
 import api
 
 
 class ConfigTestCase(unittest.TestCase):
     def test_should_be_a_conf_for_memcached(self):
-        self.assertIn('MEMCACHED', api.app.config)
+        self.assertIn("MEMCACHED", api.app.config)
+
+    def test_memcached_conf_should_be_defined_by_environ(self):
+        memcached = api.app.config["MEMCACHED"]
+        os.environ["MEMCACHED"] = "ble"
+        reload(api)
+        self.assertEqual("ble", api.app.config["MEMCACHED"])
+        api.app.config["MEMCACHED"] = memcached
 
 
 class ApiTestCase(unittest.TestCase):
