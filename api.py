@@ -14,5 +14,10 @@ def remove_instance(name, host):
     return "", 200
 
 
+@app.route("/resources/<name>", methods=["POST"])
+def bind(name):
+    return "", 201
+
+
 if __name__ == "__main__":
     app.run()
