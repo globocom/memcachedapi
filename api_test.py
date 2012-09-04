@@ -43,6 +43,10 @@ class ApiTestCase(unittest.TestCase):
         response = self.app.delete("/resources/app/host/foo")
         self.assertEqual(200, response.status_code)
 
+    def test_status_should_returns_204(self):
+        response = self.app.get("/resources/app/status")
+        self.assertEqual(204, response.status_code)
+
 
 if __name__ == "__main__":
     unittest.main()
