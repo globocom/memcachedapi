@@ -35,5 +35,6 @@ class ApiTestCase(unittest.TestCase):
         response = self.app.delete("/resources/app/host/foo")
         self.assertEqual(200, response.status_code)
 
+
 if __name__ == "__main__":
     unittest.main()
