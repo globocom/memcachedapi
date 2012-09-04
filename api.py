@@ -22,5 +22,10 @@ def bind(name):
     return out, 201
 
 
+@app.route("/resources/<name>", methods=["DELETE"])
+def unbind(name):
+        return "", 200
+
+
 if __name__ == "__main__":
     app.run()
