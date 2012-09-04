@@ -12,6 +12,9 @@ class ApiTestCase(unittest.TestCase):
         response = self.app.post('/resources')
         self.assertEqual(201, response.status_code)
 
+    def test_remove_instance_should_returns_200(self):
+        response = self.app.delete('/resources/app/host/foo')
+        self.assertEqual(200, response.status_code)
 
 if __name__ == "__main__":
     unittest.main()
