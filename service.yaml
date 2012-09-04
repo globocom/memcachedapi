@@ -1,0 +1,3 @@
+id: memcachedapi
+endpoint:
+  production: 10.170.1.83
