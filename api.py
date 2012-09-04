@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 
 MEMCACHED = "127.0.0.1:11211"
 
@@ -18,7 +18,8 @@ def remove_instance(name, host):
 
 @app.route("/resources/<name>", methods=["POST"])
 def bind(name):
-    return "", 201
+    out = jsonify(MEMCACHED=app.config["MEMCACHED"])
+    return out, 201
 
 
 if __name__ == "__main__":
