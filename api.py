@@ -2,7 +2,6 @@ import os
 
 from flask import Flask, jsonify
 
-
 MEMCACHED = os.environ.get("MEMCACHED", "127.0.0.1:11211")
 
 app = Flask(__name__)
