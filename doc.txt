@@ -1,0 +1,7 @@
+memcachedapi
+
+This service is used for memcached binding.
+
+Once binded, you will be able to use the following environment variables:
+
+    - MEMCACHED
