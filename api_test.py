@@ -3,8 +3,12 @@ import unittest
 import api
 
 
-class ApiTestCase(unittest.TestCase):
+class ConfigTestCase(unittest.TestCase):
+    def test_should_be_a_conf_for_memcached(self):
+        self.assertIn('MEMCACHED', api.app.config)
 
+
+class ApiTestCase(unittest.TestCase):
     def setUp(self):
         self.app = api.app.test_client()
 

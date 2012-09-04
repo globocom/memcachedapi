@@ -1,7 +1,9 @@
 from flask import Flask
 
+MEMCACHED = "127.0.0.1:11211"
 
 app = Flask(__name__)
+app.config.from_object(__name__)
 
 
 @app.route("/resources", methods=["POST"])
