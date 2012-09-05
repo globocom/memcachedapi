@@ -8,6 +8,19 @@ import api
 
 
 class ConfigTestCase(unittest.TestCase):
+    def test_should_be_a_conf_for_public_host(self):
+        self.assertIn("PUBLIC_HOST", api.app.config)
+
+    def test_public_host_conf_should_be_defined_by_environ(self):
+        public_host = api.app.config["PUBLIC_HOST"]
+        os.environ["PUBLIC_HOST"] = "ble"
+        reload(api)
+        self.assertEqual("ble", api.app.config["PUBLIC_HOST"])
+        api.app.config["PUBLIC_HOST"] = public_host
+
+    def test_public_host_default_value_should_be_defined_by_memcached_conf_value(self):
+        self.assertEqual(api.app.config["MEMCACHED"], api.app.config["PUBLIC_HOST"])
+
     def test_should_be_a_conf_for_memcached(self):
         self.assertIn("MEMCACHED", api.app.config)
 
@@ -36,6 +49,14 @@ class ApiTestCase(unittest.TestCase):
         data = json.loads(response.data)
         expected = {"MEMCACHED": "127.0.0.1:11211"}
         self.assertEqual(expected, data)
+
+    def test_bind_should_return_public_host_on_body(self):
+        api.app.config["PUBLIC_HOST"] = "10.10.10.10:11212"
+        response = self.app.post("/resources/app")
+        data = json.loads(response.data)
+        expected = {"MEMCACHED": "10.10.10.10:11212"}
+        self.assertEqual(expected, data)
+        api.app.config["PUBLIC_HOST"] = api.app.config["MEMCACHED"]
 
     def test_unbind(self):
         response = self.app.delete("/resources/app")
