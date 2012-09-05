@@ -1,5 +1,6 @@
 import os
 
+import memcache
 from flask import Flask, jsonify
 
 
@@ -32,7 +33,10 @@ def unbind(name):
 
 @app.route("/resources/<name>/status", methods=["GET"])
 def status(name):
-    return "", 204
+    client = memcache.Client([app.config["MEMCACHED"]])
+    if client.servers[0].connect() == 1:
+        return "", 204
+    return "", 500
 
 
 if __name__ == "__main__":

@@ -2,6 +2,8 @@ import unittest
 import json
 import os
 
+import mock
+
 import api
 
 
@@ -43,9 +45,19 @@ class ApiTestCase(unittest.TestCase):
         response = self.app.delete("/resources/app/host/foo")
         self.assertEqual(200, response.status_code)
 
-    def test_status_should_returns_204(self):
-        response = self.app.get("/resources/app/status")
+    def test_status_should_returns_204_when_memcached_is_connected(self):
+        with mock.patch('memcache.Client') as MockClass:
+            instance = MockClass.return_value
+            instance.servers[0].connect.return_value = 1
+            response = self.app.get("/resources/app/status")
         self.assertEqual(204, response.status_code)
+
+    def test_status_should_returns_500_when_memcached_is_not_connected(self):
+        with mock.patch('memcache.Client') as MockClass:
+            instance = MockClass.return_value
+            instance.servers[0].connect.return_value = 0
+            response = self.app.get("/resources/app/status")
+        self.assertEqual(500, response.status_code)
 
 
 if __name__ == "__main__":
