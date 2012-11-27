@@ -1,0 +1,10 @@
+language: python
+services: memcached
+install: pip install -r test-requirements.txt
+script: python api_test.py
+notifications:
+  irc:
+    channels:
+      - "irc.freenode.net#tsuru"
+    on_success: change
+    on_failure: always
