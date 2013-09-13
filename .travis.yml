@@ -1,7 +1,7 @@
 language: python
 services: memcached
-install: pip install -r test-requirements.txt
-script: python api_test.py
+install: make deps
+script: make test
 notifications:
   irc:
     channels:
